@@ -1,0 +1,21 @@
+[general]
+name=test_AdarshSinha
+qgisMinimumVersion=3.0
+description=QGIS plugin for uploading and visualizing shapefiles
+version=0.1
+author=AdarshSinha7
+email=adarshsinha.gkp@gmail.com
+
+about=A QGIS plugin that allows users to upload and visualize point, line, and polygon shapefiles
+
+tracker=bug tracker
+repository=code repository
+homepage=homepage
+
+hasProcessingProvider=no
+icon=icon.png
+experimental=True
+deprecated=False
+
+category=Vector
+tags=python,qgis,shapefile,vector
