@@ -183,6 +183,7 @@ class TestAdarshSinha:
 
     def select_point_file(self):
         """Select point shapefile"""
+        print("Point Select button clicked!")
         filename, _ = QFileDialog.getOpenFileName(
             self.dlg,
             "Select Point Shapefile",
@@ -190,9 +191,11 @@ class TestAdarshSinha:
             "Shapefiles (*.shp)")
         if filename:
             self.dlg.pointFileLineEdit.setText(filename)
+            print(f"Selected point file: {filename}")
 
     def select_line_file(self):
         """Select line shapefile"""
+        print("Line Select button clicked!")
         filename, _ = QFileDialog.getOpenFileName(
             self.dlg,
             "Select Line Shapefile",
@@ -200,9 +203,11 @@ class TestAdarshSinha:
             "Shapefiles (*.shp)")
         if filename:
             self.dlg.lineFileLineEdit.setText(filename)
+            print(f"Selected line file: {filename}")
 
     def select_polygon_file(self):
         """Select polygon shapefile"""
+        print("Polygon Select button clicked!")
         filename, _ = QFileDialog.getOpenFileName(
             self.dlg,
             "Select Polygon Shapefile",
@@ -210,24 +215,34 @@ class TestAdarshSinha:
             "Shapefiles (*.shp)")
         if filename:
             self.dlg.polygonFileLineEdit.setText(filename)
+            print(f"Selected polygon file: {filename}")
 
     def upload_point_file(self):
         """Upload and add point shapefile to QGIS"""
+        print("Point Upload button clicked!")
         filename = self.dlg.pointFileLineEdit.text()
         if filename:
             self.load_shapefile(filename, "Point Layer")
+        else:
+            print("No point file selected")
 
     def upload_line_file(self):
         """Upload and add line shapefile to QGIS"""
+        print("Line Upload button clicked!")
         filename = self.dlg.lineFileLineEdit.text()
         if filename:
             self.load_shapefile(filename, "Line Layer")
+        else:
+            print("No line file selected")
 
     def upload_polygon_file(self):
         """Upload and add polygon shapefile to QGIS"""
+        print("Polygon Upload button clicked!")
         filename = self.dlg.polygonFileLineEdit.text()
         if filename:
             self.load_shapefile(filename, "Polygon Layer")
+        else:
+            print("No polygon file selected")
 
     def load_shapefile(self, filepath, layer_name):
         """Load a shapefile into QGIS"""
@@ -272,14 +287,32 @@ class TestAdarshSinha:
             self.first_start = False
             self.dlg = TestAdarshSinhaDialog()
             
-            # Connect buttons to methods
-            self.dlg.selectPointButton.clicked.connect(self.select_point_file)
-            self.dlg.selectLineButton.clicked.connect(self.select_line_file)
-            self.dlg.selectPolygonButton.clicked.connect(self.select_polygon_file)
+            # Set window title
+            self.dlg.setWindowTitle("Test Adarsh Sinha - Shapefile Loader")
             
-            self.dlg.uploadPointButton.clicked.connect(self.upload_point_file)
-            self.dlg.uploadLineButton.clicked.connect(self.upload_line_file)
-            self.dlg.uploadPolygonButton.clicked.connect(self.upload_polygon_file)
+            # Connect buttons to methods using CORRECT button names from UI file
+            print("Connecting buttons...")
+            
+            try:
+                # Select buttons
+                self.dlg.pointSelectButton.clicked.connect(self.select_point_file)
+                self.dlg.lineSelectButton.clicked.connect(self.select_line_file)
+                self.dlg.polygonSelectButton.clicked.connect(self.select_polygon_file)
+                
+                # Upload buttons  
+                self.dlg.pointUploadButton.clicked.connect(self.upload_point_file)
+                self.dlg.lineUploadButton.clicked.connect(self.upload_line_file)
+                self.dlg.polygonUploadButton.clicked.connect(self.upload_polygon_file)
+                
+                print("All buttons connected successfully!")
+                
+            except Exception as e:
+                print(f"Error connecting buttons: {e}")
+                # Print available attributes for debugging
+                print("Available dialog attributes:")
+                for attr in dir(self.dlg):
+                    if 'button' in attr.lower() or 'Button' in attr:
+                        print(f"  - {attr}")
 
         # show the dialog
         self.dlg.show()
